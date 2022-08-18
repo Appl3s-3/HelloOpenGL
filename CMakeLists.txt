@@ -30,7 +30,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-add_subdirectory("${CMAKE_SOURCE_DIR}/dependencies/glfw-3.3.8")
+add_subdirectory("${CMAKE_SOURCE_DIR}/dependencies/glfw")
 target_link_libraries(${PROJECT_NAME} glfw)
 
 find_package(OpenGL REQUIRED)
