@@ -1,6 +1,12 @@
 # HelloOpenGL
 A clonable project to quickly dive into the world of OpenGL (GLFW, GLAD).
 
+## Building
+Step 1: Create a ./build folder and navigate into it. Then run one of the following.
+Windows MinGW: cmake .. -G "MinGW Makefiles"  
+Otherwise: cmake ..  
+Then just run make, mingw32-make or MSBuild.exe or whatever.
+
 ## How to recreate
 Step 1: Copy paste that CMake file  
 Step 2: Learn how it interacts with this directory  
