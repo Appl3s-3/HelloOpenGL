@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 17)
 
 # ---- Project Info ----
-set(PROJECT_NAME "prj")
+set(PROJECT_NAME "drPlayground")
 set(CMAKE_BUILD_TYPE Debug)
 project(${PROJECT_NAME})
 
@@ -14,41 +14,34 @@ file(GLOB_RECURSE HEADER_FILES
 	${CMAKE_SOURCE_DIR}/src/*.h
 	${CMAKE_SOURCE_DIR}/src/*.hpp)
 
+# ---- Project Executable ----
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+
+# ---- Header File Directories ----
 include_directories(
     "${CMAKE_SOURCE_DIR}/src"
     "${CMAKE_SOURCE_DIR}/libs/include"
 )
 
-# ---- Project Executable ----
-add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+# ---- External Dependency Path ----
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/libs/cmake")
 
-
-# Add .lib files
-#link_directories(${CMAKE_SOURCE_DIR}/libs)
-
+# ---- Libraries ----
 # GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory("${CMAKE_SOURCE_DIR}/dependencies/glfw")
-target_link_libraries(${PROJECT_NAME} glfw)
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(${PROJECT_NAME} OpenGL::GL)
 
-# ---- External Dependency Path ----
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/libs/cmake")
+add_library(LIBGLAD STATIC "libs/glad/src/gl.c")
+set(LIBPNG "${CMAKE_SOURCE_DIR}/libs/libpng.a")
+set(LIBFREETYPE "${CMAKE_SOURCE_DIR}/libs/libfreetype.a")
+set(LIBZ "${CMAKE_SOURCE_DIR}/libs/libz.a")
 
-# ---- Include Directories (containing .h files) ----
+set(LIBRARIES
+    glfw OpenGL::GL LIBGLAD ${LIBPNG} ${LIBFREETYPE} ${LIBZ}
+)
 
-# -------- Libraries --------
-add_library(GLAD STATIC "libs/glad/src/gl.c")
-#set(NAME "name") # Static/Dynamic
-
-
-set(LIBSRC)
-set(LIBSTATIC)
-set(LIBDYNAMIC)
-set(LIBS ${LIBSRC} ${LIBSTATIC} ${LIBDYNAMIC})
-
-target_link_libraries(${PROJECT_NAME} ${LIBS})
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
