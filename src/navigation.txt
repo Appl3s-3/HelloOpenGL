@@ -1,2 +1,0 @@
-saki: 2D elements
-mira: keyboard and mouse input
